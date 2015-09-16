@@ -2,6 +2,10 @@
 file = File.expand_path("../../.env", __FILE__)
 if File.exists?(file)
   File.read(file).split("\n").map {|x| x.split("=") }.each do |k,v|
-    ENV[k.strip] = v.strip
+    if k.match(/^export/)
+      k.split(' ').last
+    else
+      ENV[k.strip] = v.strip
+    end
   end
 end
